@@ -36,8 +36,8 @@ const useCtrl = {
         expiresIn: "1d",
       });
 
-      // res.json({ token });
-      res.json({ msg: "Signed Up Successfully" });
+      res.json({ token });
+      // res.json({ msg: "Signed Up Successfully" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
