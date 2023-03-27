@@ -1,13 +1,10 @@
 const router = require("express").Router();
+const useCtrl = require("../controllers/userCtrl");
 
 //Register
-router.post("/register", (req, res) => {
-  res.json({ msg: "Register a User" });
-});
+router.post("/reg", useCtrl.registerUser);
 
 //Login
-router.post("/login", (req, res) => {
-  res.json({ msg: "Log a User" });
-});
+router.post("/login", useCtrl.loginUser);
 
 module.exports = router;
