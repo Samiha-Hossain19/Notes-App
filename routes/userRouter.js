@@ -9,8 +9,6 @@ router.post("/reg", useCtrl.registerUser);
 router.post("/login", useCtrl.loginUser);
 
 //verify
-router.get("/verify", auth, (req, res) => {
-  res.json(req.user.id);
-});
+router.get("/verify", useCtrl.verifiedToken);
 
 module.exports = router;
