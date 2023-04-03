@@ -1,3 +1,4 @@
+const { response } = require("express");
 const Notes = require("../models/noteModel");
 
 const noteCtrl = {
@@ -11,6 +12,48 @@ const noteCtrl = {
   },
   createNote: async (req, res) => {
     try {
+      const { title, content, date } = req.body;
+      const newNote = new Notes({
+        title,
+        content,
+        date,
+        user_id: req.user.id,
+        name: req.user.name,
+      });
+      await newNote.save();
+      res.json({ msg: "Created a new note" });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+  deleteNote: async (req, res) => {
+    try {
+      await Notes.findByIdAndDelete(req.params.id);
+      res.json({ msg: "Deleted a note" });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+  updateNote: async (req, res) => {
+    try {
+      const { title, content, date } = req.body;
+      await Notes.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          title,
+          content,
+          date,
+        }
+      );
+      res.json({ msg: "Updated a note" });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+  getNote: async (req, res) => {
+    try {
+      const note = await Notes.findByIdAndUpdate(req.params.id);
+      res.json(note);
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
